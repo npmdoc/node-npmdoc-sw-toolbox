@@ -1,0 +1,181 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a>sw-toolbox (v3.6.0)</a>
+</h1>
+<h4>Service Worker Toolbox provides some simple helpers for use in creating your own service workers.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.sw-toolbox">module sw-toolbox</a><ol>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">sw-toolbox.</span>idb_cache_expiration</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.sw-toolbox.idb_cache_expiration">module sw-toolbox.idb_cache_expiration</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sw-toolbox.idb_cache_expiration.expireEntries">
+            function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>expireEntries
+            <span class="apidocSignatureSpan">(db, maxEntries, maxAgeSeconds, now)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sw-toolbox.idb_cache_expiration.getDb">
+            function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>getDb
+            <span class="apidocSignatureSpan">(cacheName)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sw-toolbox.idb_cache_expiration.setTimestampForUrl">
+            function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>setTimestampForUrl
+            <span class="apidocSignatureSpan">(db, url, now)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.sw-toolbox" id="apidoc.module.sw-toolbox">module sw-toolbox</a></h1>
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.sw-toolbox.idb_cache_expiration" id="apidoc.module.sw-toolbox.idb_cache_expiration">module sw-toolbox.idb_cache_expiration</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.sw-toolbox.idb_cache_expiration.expireEntries" id="apidoc.element.sw-toolbox.idb_cache_expiration.expireEntries">
+        function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>expireEntries
+        <span class="apidocSignatureSpan">(db, maxEntries, maxAgeSeconds, now)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function expireEntries(db, maxEntries, maxAgeSeconds, now) {
+  return expireOldEntries(db, maxAgeSeconds, now).then(function(oldUrls) {
+    return expireExtraEntries(db, maxEntries).then(function(extraUrls) {
+      return oldUrls.concat(extraUrls);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.sw-toolbox.idb_cache_expiration.getDb" id="apidoc.element.sw-toolbox.idb_cache_expiration.getDb">
+        function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>getDb
+        <span class="apidocSignatureSpan">(cacheName)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function getDb(cacheName) {
+  if (!(cacheName in cacheNameToDbPromise)) {
+    cacheNameToDbPromise[cacheName] = openDb(cacheName);
+  }
+
+  return cacheNameToDbPromise[cacheName];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.sw-toolbox.idb_cache_expiration.setTimestampForUrl" id="apidoc.element.sw-toolbox.idb_cache_expiration.setTimestampForUrl">
+        function <span class="apidocSignatureSpan">sw-toolbox.idb_cache_expiration.</span>setTimestampForUrl
+        <span class="apidocSignatureSpan">(db, url, now)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function setTimestampForUrl(db, url, now) {
+  return new Promise(function(resolve, reject) {
+    var transaction = db.transaction(STORE_NAME, 'readwrite');
+    var objectStore = transaction.objectStore(STORE_NAME);
+    objectStore.put({url: url, timestamp: now});
+
+    transaction.oncomplete = function() {
+      resolve(db);
+    };
+
+    transaction.onabort = function() {
+      reject(transaction.error);
+    };
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
